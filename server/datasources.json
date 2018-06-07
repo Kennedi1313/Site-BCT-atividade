@@ -1,0 +1,25 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mysqlDs": {
+    "host": "demo.strongloop.com",
+    "port": 3306,
+    "url": "",
+    "database": "getting_started",
+    "password": "L00pBack",
+    "name": "mysqlDs",
+    "user": "demo",
+    "connector": "mysql"
+  },
+  "mongoDs": {
+    "host": "demo.strongloop.com",
+    "port": 27017,
+    "database": "getting_started_intermediate",
+    "username": "demo",
+    "password": "L00pBack",
+    "name": "mongoDs",
+    "connector": "mongodb"
+  }
+}
