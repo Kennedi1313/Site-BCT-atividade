@@ -11,6 +11,10 @@ class MyReviews extends Component {
         }
     }
 
+    add(){
+        localStorage.setItem('add', true); 
+    }
+
     componentWillMount() {
         this.getReviews();
     }
@@ -29,8 +33,13 @@ class MyReviews extends Component {
             return (
                 <div key={reviews.id}>
                     <ReviewItem item={reviews} key={reviews.id} />
-                    <Link className="btn" to={`Reviews/edit/${reviews.id}`}>Edit</Link>
-                    <button className="btn red right">Delete</button>
+                    <Link className="btn" onClick={this.add.bind(this)} to={`Reviews/edit/${reviews.id}`}>Edit</Link>
+                    <button onClick={this.onDelete = () => {
+                        let reviewId = reviews.id;
+                        axios.delete(`http://localhost:3000/api/Reviews/${reviewId}`).then(response => {
+                            window.location.reload();
+                        }).catch(err => console.log(err));
+                    }} className="btn red right">Delete</button>
                 </div>
             )
         })

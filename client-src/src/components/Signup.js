@@ -33,7 +33,7 @@ class Signup extends Component {
             <label htmlFor="email">Email</label>
           </div>
           <div className="input-field">
-            <input type="text" name="password" ref="password" />
+            <input type="password" name="password" ref="password" />
             <label htmlFor="password">  Password</label>
           </div>
           <input type="submit" value="Create Account" className="btn blue darken-3" />

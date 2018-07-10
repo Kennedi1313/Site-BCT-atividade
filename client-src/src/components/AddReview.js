@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 class AddReview extends Component {
     constructor(){
@@ -8,6 +7,7 @@ class AddReview extends Component {
         this.state = {
             rating: ''
         }
+        
     }
 
     setRating(event) {
@@ -16,8 +16,9 @@ class AddReview extends Component {
 
     addReview(newReview){
         console.log(newReview);
+        
         axios.request({
-            method: 'post',
+            method: 'put',
             url: 'http://localhost:3000/api/Reviews',
             data: newReview
         }).then(response => {
@@ -28,10 +29,9 @@ class AddReview extends Component {
     onSubmit(e) {
         let userId = localStorage.getItem('userId');
         const newReview = {
-            date: '',
+            date: Date.now() - (1000*60*60*24),
             rating: this.state.rating,
             comments: this.refs.comments.value,
-            id: '',
             coffeeShopId: this.refs.name.value,
             publisherId: userId
         }
@@ -41,46 +41,60 @@ class AddReview extends Component {
         e.preventDefault();
     }
 
+    reload = () => {
+        let flag = localStorage.getItem('add');
+        if(flag === 'true'){
+            window.location.reload();
+            localStorage.setItem('add', false);
+        }
+        
+    }
     
+    componentDidMount(){
+        this.reload();
+    }
 
     render() {
-
+        let option_id = ['0', '1', '2', '3'];
+        let options = [{ name: 'Selecione uma opção' }, { name: 'Bel Cafe' }, { name: 'Caffe Artigiano' }, { name: 'Three Bees Coffee House' }];
         return (
-            <div className="container">
+            <div className="container" >
                 <form onSubmit={this.onSubmit.bind(this)}>
 
-                    <div className="input-field">
+                    <div className="input-field" >
                         <select ref="name">
-                            <option value="" disabled selected>Choose the coffee shop</option>
-                            <option value="1">Bel Cafe</option>
-                            <option value="2">Caffe Artigiano</option>
-                            <option value="3">Three Bees Coffee House</option>
+                            {option_id.map(id =>
+                                <option key={id} value={id}>{options[id].name}</option>
+                            )}
                         </select>
                         <label>Coffee shop name</label>
                     </div>
-
                     <div onChange={event => this.setRating(event)}>
                         <label>Rating</label>
                         <p >
                             <label>
                                 <input name="rating" type="radio" value="1" ref="rating" />
-                                <span><i className="fa fa-star"/> 1</span>
+                                <span> 1 <i className="fa fa-star"/></span>
+                                <br/>
                             </label>
                             <label>
                                 <input name="rating" type="radio" value="2" ref="rating"/>
-                                <span><i className="fa fa-star "/> 2</span>
+                                <span> 2 <i className="fa fa-star "/></span>
+                                <br/>
                             </label>
                             <label>
                                 <input name="rating" type="radio" value="3" ref="rating"/>
-                                <span><i className="fa fa-star"/> 3</span>
+                                <span> 3 <i className="fa fa-star"/></span>
+                                <br/>
                             </label>
                             <label>
                                 <input name="rating" type="radio" value="4" ref="rating"/>
-                                <span><i className="fa fa-star"/> 4</span>
+                                <span> 4 <i className="fa fa-star"/></span>
+                                <br/>
                             </label>
                             <label>
                                 <input name="rating" type="radio" value="5" ref="rating"/>
-                                <span><i className="fa fa-star"/> 5</span>
+                                <span> 5 <i className="fa fa-star"/></span>
                             </label>
                         </p>
                     </div>
@@ -92,7 +106,7 @@ class AddReview extends Component {
 
                     <input type="submit" value="Save" className="btn" />
                 </form>
-            </div>
+            </div >
         )
     }
 }
