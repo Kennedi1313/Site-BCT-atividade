@@ -11,14 +11,16 @@ class MyReviews extends Component {
         }
     }
 
-    add(){
-        localStorage.setItem('add', true); 
+    //tentativa de consertar o bug do Select
+    add() {
+        localStorage.setItem('add', true);
     }
 
     componentWillMount() {
         this.getReviews();
     }
 
+    //pega as Reviews do usuario autenticado 
     getReviews() {
         let userId = localStorage.getItem('userId');
         axios.get(`http://localhost:3000/api/Reviewers/${userId}/reviews`).then(response => {
@@ -29,6 +31,7 @@ class MyReviews extends Component {
     }
 
     render() {
+        //pega o card de Review construido em ReviewItem.js
         const reviewItems = this.state.reviews.map((reviews, i) => {
             return (
                 <div key={reviews.id}>
@@ -42,7 +45,9 @@ class MyReviews extends Component {
                     }} className="btn red right">Delete</button>
                 </div>
             )
-        })
+        });
+        
+        //retorna todas as Reviews do usuario
         return (
             <div className="container">
                 <ul className="collection">

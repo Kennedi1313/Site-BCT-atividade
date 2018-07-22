@@ -3,32 +3,36 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 class Login extends Component {
-    constructor(){
-        super();
-        this.state = {
-            userDetails:''
-        }
+  constructor() {
+    super();
+    this.state = {
+      userDetails: ''
     }
+  }
 
+  //faz o login de um usuario
+  //retorna accessToken, refreshToken e userId
+  //adiciona essas variaveis no localStorage
   submitUser(loginUser) {
     axios.request({
       method: 'post',
       url: 'http://localhost:3000/api/Reviewers/login',
       data: loginUser
     }).then(response => {
-        this.setState({userDetails: response.data}, () => {
-            let token = this.state.userDetails.id;
-            let refreshToken = this.state.userDetails.ttl;
-            let userId = this.state.userDetails.userId;
-            localStorage.setItem('token', token);
-            localStorage.setItem('refreshToken', refreshToken);
-            localStorage.setItem('userId', userId);
-            
-        });
+      this.setState({ userDetails: response.data }, () => {
+        let token = this.state.userDetails.id;
+        let refreshToken = this.state.userDetails.ttl;
+        let userId = this.state.userDetails.userId;
+        localStorage.setItem('token', token);
+        localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('userId', userId);
+
+      });
       this.props.history.push('/');
     }).catch(err => console.log(err));
   }
 
+  //pega os valores do formulario e chama submitUser
   onSubmit(e) {
     const loginUser = {
       email: this.refs.email.value,
@@ -39,6 +43,8 @@ class Login extends Component {
   }
 
   render() {
+
+    //retorna o formulario de login
     return (
       <div className="container">
         <h1>Login</h1>

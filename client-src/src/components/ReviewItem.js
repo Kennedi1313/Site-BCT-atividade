@@ -16,6 +16,7 @@ class ReviewItem extends Component {
         this.getShop();
     }
 
+    //pega as informações do CoffeeShop
     getShop() {
         let shopId = this.props.item.coffeeShopId;
         axios.get(`http://localhost:3000/api/CoffeeShops/${shopId}`).then(response => {
@@ -25,6 +26,7 @@ class ReviewItem extends Component {
         }).catch(err => console.log(err));
     }
 
+    //pega as informações do Reviewer
     getReviewer() {
         let reviewerId = this.props.item.publisherId;
         axios.get(`http://localhost:3000/api/Reviewers/${reviewerId}`).then(response => {
@@ -34,14 +36,15 @@ class ReviewItem extends Component {
         }).catch(err => console.log(err));
     }
 
+    //retorna um card com um item de Review
     render() {
         return (
             <li className="collection-item">
-            
+
                 {this.state.item.date} | {this.state.shopDetails.name}
                 <p>{this.state.reviewerDetails.email}</p>
                 <p><i className="fa fa-star"></i>{this.state.item.rating} - {this.state.item.comments}`</p>
-            
+
             </li>
         )
     }

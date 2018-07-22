@@ -2,21 +2,23 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 class AddReview extends Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
             rating: ''
         }
-        
+
     }
 
+    //atualiza o valor do Radio
     setRating(event) {
-        this.setState({rating: event.target.value});
+        this.setState({ rating: event.target.value });
     }
 
-    addReview(newReview){
+    //adiciona uma Review no bd
+    addReview(newReview) {
         console.log(newReview);
-        
+
         axios.request({
             method: 'put',
             url: 'http://localhost:3000/api/Reviews',
@@ -25,11 +27,12 @@ class AddReview extends Component {
             this.props.history.push('/');
         }).catch(err => console.log(err));
     }
-    
+
+    //pega os valores do formulario e chama addReview
     onSubmit(e) {
         let userId = localStorage.getItem('userId');
         const newReview = {
-            date: Date.now() - (1000*60*60*24),
+            date: Date.now() - (1000 * 60 * 60 * 24),
             rating: this.state.rating,
             comments: this.refs.comments.value,
             coffeeShopId: this.refs.name.value,
@@ -41,60 +44,64 @@ class AddReview extends Component {
         e.preventDefault();
     }
 
+    //conserta o bug do Select
     reload = () => {
         let flag = localStorage.getItem('add');
-        if(flag === 'true'){
+        if (flag === 'true') {
             window.location.reload();
             localStorage.setItem('add', false);
         }
-        
+
     }
-    
-    componentDidMount(){
+
+    componentDidMount() {
         this.reload();
     }
 
     render() {
         let option_id = ['0', '1', '2', '3'];
         let options = [{ name: 'Selecione uma opção' }, { name: 'Bel Cafe' }, { name: 'Caffe Artigiano' }, { name: 'Three Bees Coffee House' }];
+        
+        //retorna o formulario para add uma Review
         return (
             <div className="container" >
                 <form onSubmit={this.onSubmit.bind(this)}>
-
+                    <label>Coffee shop name</label>
                     <div className="input-field" >
                         <select ref="name">
                             {option_id.map(id =>
                                 <option key={id} value={id}>{options[id].name}</option>
                             )}
                         </select>
-                        <label>Coffee shop name</label>
+
                     </div>
+
                     <div onChange={event => this.setRating(event)}>
                         <label>Rating</label>
                         <p >
                             <label>
                                 <input name="rating" type="radio" value="1" ref="rating" />
-                                <span> 1 <i className="fa fa-star"/></span>
-                                <br/>
+                                <span> 1 <i className="fa fa-star" /></span>
+                                <br />
                             </label>
                             <label>
-                                <input name="rating" type="radio" value="2" ref="rating"/>
-                                <span> 2 <i className="fa fa-star "/></span>
-                                <br/>
+                                <input name="rating" type="radio" value="2" ref="rating" />
+                                <span> 2 <i className="fa fa-star " /></span>
+                                <br />
                             </label>
                             <label>
-                                <input name="rating" type="radio" value="3" ref="rating"/>
-                                <span> 3 <i className="fa fa-star"/></span>
-                                <br/>
+                                <input name="rating" type="radio" value="3" ref="rating" />
+                                <span> 3 <i className="fa fa-star" /></span>
+                                <br />
                             </label>
                             <label>
-                                <input name="rating" type="radio" value="4" ref="rating"/>
-                                <span> 4 <i className="fa fa-star"/></span>
-                                <br/>
+                                <input name="rating" type="radio" value="4" ref="rating" />
+                                <span> 4 <i className="fa fa-star" /></span>
+                                <br />
                             </label>
                             <label>
-                                <input name="rating" type="radio" value="5" ref="rating"/>
-                                <span> 5 <i className="fa fa-star"/></span>
+                                <input name="rating" type="radio" value="5" ref="rating" />
+                                <span> 5 <i className="fa fa-star" /></span>
                             </label>
                         </p>
                     </div>

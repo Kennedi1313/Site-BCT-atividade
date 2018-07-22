@@ -14,6 +14,7 @@ class Reviews extends Component{
         this.getReviews();
     }
 
+    //pega as informações de todas as Reviews do bd
     getReviews(){
         axios.get('http://localhost:3000/api/Reviews').then(response => {
             this.setState({reviews: response.data}, () => {
@@ -23,11 +24,14 @@ class Reviews extends Component{
     }
 
     render(){
+        //pega o card de Review construido em ReviewItem.js
         const reviewItems = this.state.reviews.map((reviews, i) => {
             return(
                 <ReviewItem item={reviews} key={reviews.id}/>
             )
-        })
+        });
+
+        //retorna todas as Reviews do bd
         return (
             <div className="container">
                 <ul className="collection">

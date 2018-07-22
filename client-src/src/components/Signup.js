@@ -3,6 +3,7 @@ import axios from 'axios';
 
 class Signup extends Component {
 
+  //add um usuario no bd
   submitUser(loginUser) {
     axios.request({
       method: 'post',
@@ -14,6 +15,7 @@ class Signup extends Component {
     }).catch(err => console.log(err));
   }
 
+  //pega as informações do formulario e chama submitUser
   onSubmit(e) {
     const loginUser = {
       email: this.refs.email.value,

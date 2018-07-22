@@ -8,7 +8,7 @@ import MyReviews from './MyReviews';
 import AddReview from './AddReview';
 import EditReview from './EditReview';
 
-
+//verifica a validade das variaveis de autenticação
 const checkAuth = () => {
     const token = localStorage.getItem('token');
     const refreshToken = localStorage.getItem('refreshToken');
@@ -20,6 +20,8 @@ const checkAuth = () => {
     return true;
 }
 
+//se checkAuth for true, renderiza o componente 
+//se checkAuth for false, redireciona para /login
 const AuthRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => (
         checkAuth() ? (
@@ -32,6 +34,7 @@ const AuthRoute = ({ component: Component, ...rest }) => (
 
 class Main extends Component {
     render() {
+        //faz o roteamento
         return (
             <main>
                 <Switch>

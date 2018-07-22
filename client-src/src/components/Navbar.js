@@ -9,10 +9,13 @@ class Navbar extends Component {
         this.state = { reviewerDetails: '' }
     }
 
+    //tentativa de consertar o bug do Select
     add() {
         localStorage.setItem('add', true);
     }
 
+    //pega informações do usuario autenticado chamando a função getReviewer, 
+    //caso esse exista
     componentWillUpdate() {
         let localId = localStorage.getItem('userId');
         let stateId = this.state.reviewerDetails.id;
@@ -22,6 +25,8 @@ class Navbar extends Component {
         }
 
     }
+
+    //pega informações do usuario autenticado
     getReviewer() {
         let reviewerId = localStorage.getItem('userId');
         console.log(reviewerId);
@@ -32,6 +37,7 @@ class Navbar extends Component {
         }).catch(err => console.log(err));
     }
 
+    //faz o logout 
     postLogout(token) {
         axios.request({
             method: 'post',
@@ -41,6 +47,8 @@ class Navbar extends Component {
             history.push('/');
         }).catch(err => console.log(err));
     }
+
+    //prepara as informações e chama a função postLogout ao pressionar o botão de logout
     logout(e) {
         let token = localStorage.getItem('token');
         this.postLogout(token);
@@ -50,6 +58,9 @@ class Navbar extends Component {
     render() {
         let onShow;
         let onShowAuth;
+
+        //variaveis usadas para esconder ou mostrar os botões do navBar,
+        //botões a serem mostrados variam se o usuario estiver logado ou não
         if (!localStorage.getItem('token')) {
             onShowAuth = 'hide';
             onShow = '';
@@ -57,6 +68,8 @@ class Navbar extends Component {
             onShowAuth = '';
             onShow = 'hide';
         }
+
+        //retorna a barra de menu
         return (
             <div>
                 <nav className="nav-extended blue darken-3">

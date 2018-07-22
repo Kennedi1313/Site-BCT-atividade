@@ -24,6 +24,7 @@ class EditReview extends Component {
         this.reload();
     }
 
+    //pega as informações da Review que esta sendo editada
     getReviews() {
         let reviewId = this.props.match.params.id;
         axios.get(`http://localhost:3000/api/Reviews/${reviewId}`).then(response => {
@@ -38,16 +39,19 @@ class EditReview extends Component {
         }).catch(err => console.log(err));
     }
 
+    //atualiza o valor do Radio
     radioChanged(e) {
         this.setState({ rating: e.target.value });
         console.log(this.state.coffeeShopId);
     }
+
+    //atualiza o valor do Select
     dropdownChanged(e) {
         this.setState({ coffeeShopId: e.target.value });
         console.log(this.refs.name.value);
     }
 
-
+    //atualiza o bd
     EditReview(newReview) {
         let reviewId = this.props.match.params.id;
 
@@ -60,6 +64,7 @@ class EditReview extends Component {
         }).catch(err => console.log(err));
     }
 
+    //pega os valores do formulario e chama EditReview
     onSubmit(e) {
         let userId = localStorage.getItem('userId');
         const newReview = {
@@ -75,6 +80,7 @@ class EditReview extends Component {
         e.preventDefault();
     }
 
+    //conserta o bug do Select
     reload = () => {
         let flag = localStorage.getItem('add');
         if (flag === 'true') {
@@ -87,17 +93,19 @@ class EditReview extends Component {
     render() {
         let option_id = ['0', '1', '2', '3'];
         let options = [{ name: 'Selecione uma opção' }, { name: 'Bel Cafe' }, { name: 'Caffe Artigiano' }, { name: 'Three Bees Coffee House' }];
+        
+        //retorna o formulario para editar uma Review
         return (
             <div className="container" >
                 <form onSubmit={this.onSubmit.bind(this)}>
 
                     <div className="input-field" >
+                        <label>Coffee shop name</label>
                         <select ref="name" defaultValue={this.coffeeShopId} onChange={this.dropdownChanged.bind(this)}>
                             {option_id.map(id =>
                                 <option key={id} value={id}>{options[id].name}</option>
                             )}
                         </select>
-                        <label>Coffee shop name</label>
                     </div>
 
                     <div>
