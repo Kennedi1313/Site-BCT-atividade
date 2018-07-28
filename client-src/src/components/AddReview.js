@@ -60,7 +60,7 @@ class AddReview extends Component {
 
     render() {
         let option_id = ['0', '1', '2', '3'];
-        let options = [{ name: 'Selecione uma opção' }, { name: 'Bel Cafe' }, { name: 'Caffe Artigiano' }, { name: 'Three Bees Coffee House' }];
+        let options = [{ name: 'Selecione uma opção' }, { name: 'Bel Cafe' }, { name: 'Three Bees Coffee House' }, { name: 'Caffe Artigiano' }];
         
         //retorna o formulario para add uma Review
         return (
